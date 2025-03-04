@@ -115,7 +115,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="editForm" method="POST">
+                <form action="{{ route('kasus-ispa.update', $kasus->id) }}" method="POST">
+
                     @csrf
                     @method('PUT')
                     <div class="modal-body">

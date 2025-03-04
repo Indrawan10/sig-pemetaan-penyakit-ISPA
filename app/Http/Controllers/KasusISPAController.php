@@ -12,7 +12,8 @@ class KasusISPAController extends Controller
     public function index()
     {
         $kasus = KasusISPA::with('desa')->get();
-        return view('pages.app.list-data-kasus-ispa', compact('kasus'));
+        $penyakitList = Penyakit::all();
+        return view('pages.app.list-data-kasus-ispa', compact('kasus', 'penyakitList'));
     }
 
     public function create()
@@ -56,7 +57,7 @@ class KasusISPAController extends Controller
         return redirect()->route('kasus-ispa.index')->with('success', 'Data berhasil ditambahkan!');
     }
 
-    
+
 
 
 

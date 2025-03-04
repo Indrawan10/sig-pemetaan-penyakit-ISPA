@@ -75,6 +75,11 @@ Route::get('/desa/{id}', [KasusISPAController::class, 'show'])->name('desa.show'
 
 
 
+
+
+
+
+
 // Route::get('/dashboard-home', function () {
 //     return view('pages.depan.dashboard-home', ['type_menu' => '']);
 // })->name('dashboard.home');

@@ -22,7 +22,7 @@
                 <div class="card p-4">
                     <form action="{{ route('kasus-ispa.store') }}" method="POST">
                         @csrf
-                        
+
                         @if ($errors->has('duplicate'))
     <div class="alert alert-danger">
         {{ $errors->first('duplicate') }}

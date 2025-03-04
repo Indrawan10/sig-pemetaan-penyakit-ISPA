@@ -4,6 +4,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PemetaanIspaController;
 use App\Http\Controllers\PendudukController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\KasusISPAController;
+use App\Http\Controllers\PenyakitController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user', UserController::class);
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/api/pie-chart-data', [DashboardController::class, 'pieChartData'])
-    ->name('dashboard.piechart.data');
+        ->name('dashboard.piechart.data');
 });
 
 Route::get('/tambah-data', function () {
@@ -58,6 +60,14 @@ Route::get('/get-locations', [PemetaanIspaController::class, 'getLocations'])->n
 
 Route::get('/data-desa', [PemetaanIspaController::class, 'showDataDesa'])->name('data.desa');
 Route::get('/data-desa/{id}', [PemetaanIspaController::class, 'showDetail'])->name('data.desa.detail');
+
+Route::resource('kasus-ispa', KasusISPAController::class);
+Route::resource('penyakit', PenyakitController::class);
+
+Route::get('/kasus-ispa', [KasusISPAController::class, 'index'])->name('kasus-ispa.index');
+Route::get('/desa/{id}', [KasusISPAController::class, 'show'])->name('desa.show');
+
+
 
 
 

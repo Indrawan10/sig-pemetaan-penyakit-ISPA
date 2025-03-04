@@ -45,6 +45,14 @@
                         <a class="nav-link"
                             href="{{ route('list.data.penduduk') }}">Data List Penduduk</a>
                     </li>
+                    <li>
+                        <a class="nav-link"
+                            href="{{ route('kasus-ispa.create') }}">Tambah Data Kasus ISPA</a>
+                    </li>
+                    <li>
+                        <a class="nav-link"
+                            href="{{ route('kasus-ispa.index') }}">Data List Penduduk</a>
+                    </li>
                 </ul>
             </li>
 

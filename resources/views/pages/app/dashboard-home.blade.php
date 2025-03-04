@@ -39,12 +39,17 @@
     </nav>
 
     <!-- Banner -->
-    <section class="bg-blue-500 text-white py-20 text-center px-4">
-        <div class="container mx-auto">
-            <h1 class="text-4xl md:text-5xl font-bold">Sistem Informasi Geografis Pemetaan Penyakit ISPA</h1>
-            <p class="mt-4 text-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-        </div>
-    </section>
+  <section class="relative bg-cover bg-center bg-no-repeat bg-fixed h-screen text-white flex items-center justify-center text-center px-4" style="background-image: url('https://radartegal.disway.id/upload/27ab65482a9cbaff84d0d8e372cd4129.png');">
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    <div class="container mx-auto relative z-10">
+        <h1 class="text-4xl md:text-5xl font-bold">Kota Slawi</h1>
+        <p class="mt-4 text-lg max-w-2xl mx-auto">
+            Sistem Informasi ini merupakan aplikasi pemetaan geografis tempat kasus penyakit ISPA di wilayah Slawi. Aplikasi ini memuat informasi dan lokasi persebaran kasus penyakit ISPA.
+        </p>
+    </div>
+</section>
+
+
 
     <!-- Pemetaan -->
     <section id="map" class="py-20 px-4">
@@ -54,24 +59,60 @@
         </div>
     </section>
 
-    <!-- Jumlah Desa -->
-    <section id="desa" class="py-20 px-4">
-        <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-bold text-gray-800">Jumlah Desa di Kecamatan Slawi</h2>
-            <h2 class="text-3xl font-bold text-gray-800 mt-4">5</h2>
+       <section id="tentang-ispa" class="py-20 px-4 bg-white">
+    <div class="container mx-auto flex flex-col md:flex-row items-center">
+        <!-- Gambar ISPA -->
+        <div class="md:w-1/3 w-full flex justify-center">
+            <img src="https://kabarmuarateweh.id/wp-content/uploads/2024/05/screenshot-1715262510990.png" alt="Gambar ISPA" class="rounded-lg shadow-md">
         </div>
-    </section>
 
-    <!-- About -->
-    <section id="about" class="py-20 px-4">
-        <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-bold text-gray-800">Tentang Kami</h2>
-            <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s.
+        <!-- Penjelasan ISPA -->
+        <div class="md:w-2/3 w-full md:pl-8 mt-6 md:mt-0">
+            <h2 class="text-3xl font-bold text-gray-800">Apa Itu ISPA?</h2>
+            <p class="mt-4 text-gray-600">
+                Infeksi Saluran Pernapasan Akut (ISPA) adalah infeksi yang terjadi pada saluran pernapasan
+                yang dapat memengaruhi hidung, tenggorokan, dan paru-paru. ISPA bisa disebabkan oleh virus,
+                bakteri, atau faktor lingkungan seperti polusi udara. Penyakit ini dapat menular dengan mudah
+                melalui udara atau kontak langsung dengan penderita.
             </p>
         </div>
-    </section>
+    </div>
+</section>
+
+
+
+<!-- Tips Pencegahan ISPA -->
+<section class="py-20 bg-gray-100 text-center">
+    <div class="container mx-auto">
+        <h2 class="text-3xl font-bold text-gray-800">Cara Mencegah ISPA</h2>
+        <p class="mt-4 text-gray-600">Beberapa langkah untuk menghindari infeksi saluran pernapasan akut.</p>
+        <div class="flex flex-wrap justify-center mt-6">
+            <div class="w-full md:w-1/3 p-4">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <img src="" alt="Gunakan Masker" class="w-16 mx-auto mb-4">
+                    <h3 class="text-lg font-semibold text-blue-500">Gunakan Masker</h3>
+                    <p class="text-gray-700">Hindari paparan polusi udara dengan menggunakan masker.</p>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 p-4">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4826/4826030.png" alt="Cuci Tangan" class="w-16 mx-auto mb-4">
+                    <h3 class="text-lg font-semibold text-green-500">Cuci Tangan</h3>
+                    <p class="text-gray-700">Rajin mencuci tangan dengan sabun untuk mencegah penyebaran virus.</p>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 p-4">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1046/1046786.png" alt="Jaga Pola Makan" class="w-16 mx-auto mb-4">
+                    <h3 class="text-lg font-semibold text-red-500">Jaga Pola Makan</h3>
+                    <p class="text-gray-700">Konsumsi makanan bergizi untuk meningkatkan daya tahan tubuh.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 
     <!-- Footer -->
     <footer class="bg-blue-500 text-white py-6 text-center">

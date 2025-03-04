@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 
 use App\Models\Penduduk as ModelsPenduduk;
+use App\Models\KasusISPA;
 
 class PemetaanIspaController extends Controller
 {
@@ -75,15 +76,17 @@ class PemetaanIspaController extends Controller
     public function showDataDesa()
     {
         $locations = PemetaanIspa::all();
+        
         return view('pages.app.data-desa', compact('locations'));
     }
 
     public function showDetail($id)
     {
         $location = PemetaanIspa::findOrFail($id);
-        $penduduks = ModelsPenduduk::where('pemetaan_ispa_id', $id)->get(); // Ambil penduduk berdasarkan desa
+        $penduduks = ModelsPenduduk::where('pemetaan_ispa_id', $id)->get();
+        $kasus = KasusIspa::where('pemetaan_ispa_id', $id)->get(); // Ambil penduduk berdasarkan desa
 
-        return view('pages.app.detail-desa', compact('location', 'penduduks'));
+        return view('pages.app.detail-desa', compact('location', 'penduduks', 'kasus'));
     }
 
 

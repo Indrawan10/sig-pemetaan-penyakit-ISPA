@@ -13,26 +13,40 @@
     <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
             <a href="/" class="text-xl font-bold text-gray-800">BACOT</a>
-            <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
-                ☰
-            </button>
+            <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none text-2xl">☰</button>
             <div id="menu" class="hidden md:flex space-x-4">
                 <a href="/" class="text-gray-700 hover:text-blue-500 px-4">Home</a>
                 <a href="{{ route('data.desa') }}" class="text-gray-700 hover:text-blue-500 px-4">Data Desa</a>
                 <a href="{{ route('login') }}" class="text-gray-700 hover:text-blue-500 px-4">Login</a>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md absolute w-full left-0">
             <a href="/" class="block text-gray-700 hover:text-blue-500 p-4">Home</a>
             <a href="{{ route('data.desa') }}" class="block text-gray-700 hover:text-blue-500 p-4">Data Desa</a>
             <a href="{{ route('login') }}" class="block text-gray-700 hover:text-blue-500 p-4">Login</a>
         </div>
     </nav>
 
+    <section class="relative bg-cover bg-center h-80 flex items-center justify-center text-center px-4" style="background-image: url('https://radartegal.disway.id/upload/27ab65482a9cbaff84d0d8e372cd4129.png');">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="container mx-auto relative z-10 text-white">
+            <h1 class="text-4xl md:text-5xl font-bold">Sistem Informasi Geografis Pemetaan Penyakit ISPA</h1>
+            <p class="mt-4 text-lg">Informasi lokasi dan penyebaran kasus ISPA di wilayah ini.</p>
+        </div>
+    </section>
+
     <section class="container mx-auto py-16 px-4">
-        <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
+        <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Detail Desa</h2>
+            @php
+    $totalKasus = 0;
+    foreach($kasus as $k) {
+        $totalKasus += $k->jumlah_laki_laki + $k->jumlah_perempuan;
+    }
+@endphp
+
             <p class="text-lg"><strong>Nama Desa:</strong> {{ $location->nama_desa }}</p>
-            <p class="text-lg"><strong>Jumlah Kasus ISPA:</strong> {{ $location->jumlah_terkena }}</p>
+            <p class="text-lg"><strong>Jumlah Kasus ISPA:</strong> {{ $totalKasus }}</p>
             <p class="text-lg"><strong>Latitude:</strong> {{ $location->latitude }}</p>
             <p class="text-lg"><strong>Longitude:</strong> {{ $location->longitude }}</p>
             <div id="map" class="w-full h-64 mt-4 rounded-lg"></div>
@@ -44,23 +58,38 @@
                 <thead>
                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                         <th class="py-3 px-6 text-center">No</th>
-                        <th class="py-3 px-6 text-center">Nama</th>
+                        <th class="py-3 px-6 text-center">Nama Penyakit</th>
                         <th class="py-3 px-6 text-center">Umur</th>
-                        <th class="py-3 px-6 text-center">Jenis Kelamin</th>
-                        <th class="py-3 px-6 text-center">Alamat</th>
+                        <th class="py-3 px-6 text-center">Laki-laki</th>
+                        <th class="py-3 px-6 text-center">Perempuan</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
-                    @foreach ($penduduks as $index => $penduduk)
-                    <tr class="border-b border-gray-200 hover:bg-gray-100">
-                        <td class="py-3 px-6 text-center">{{ $index + 1 }}</td>
-                        <td class="py-3 px-6 text-center">{{ $penduduk->nama }}</td>
-                        <td class="py-3 px-6 text-center">{{ $penduduk->umur }}</td>
-                        <td class="py-3 px-6 text-center">{{ $penduduk->jenis_kelamin }}</td>
-                        <td class="py-3 px-6 text-center">{{ $penduduk->alamat }}</td>
+    @php
+        $totalKasus = 0;
+        $sortedKasus = $kasus->sortBy('umur'); // Gunakan sortBy() untuk mengurutkan umur dari terkecil ke terbesar
+    @endphp
+    @foreach($sortedKasus as $k)
+    @php
+        $jumlahTotal = $k->jumlah_laki_laki + $k->jumlah_perempuan;
+        $totalKasus += $jumlahTotal;
+    @endphp
+    <tr class="border-b border-gray-200 hover:bg-gray-100">
+        <td class="py-3 px-6 text-center">{{ $loop->iteration }}</td>
+        <td class="py-3 px-6 text-center">{{ $k->nama_penyakit }}</td>
+        <td class="py-3 px-6 text-center">{{ $k->umur }}</td>
+        <td class="py-3 px-6 text-center">{{ $k->jumlah_laki_laki }}</td>
+        <td class="py-3 px-6 text-center">{{ $k->jumlah_perempuan }}</td>
+    </tr>
+    @endforeach
+</tbody>
+
+                <tfoot>
+                    <tr class="bg-gray-200 font-bold">
+                        <td colspan="4" class="py-3 px-6 text-center">Total Keseluruhan</td>
+                        <td class="py-3 px-6 text-center">{{ $totalKasus }}</td>
                     </tr>
-                    @endforeach
-                </tbody>
+                </tfoot>
             </table>
         </div>
     </section>

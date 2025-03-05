@@ -14,6 +14,9 @@
                 @if(session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
+                @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
 
                 <table class="table table-bordered">
                     <thead>
@@ -68,6 +71,7 @@
                 @method('PUT')
                 <div class="modal-body">
                     <input type="hidden" id="editId" name="id">
+                    <input type="hidden" id="editPemetaanId" name="pemetaan_ispa_id">
                     <div class="form-group">
                         <label>Nama Desa</label>
                         <input type="text" id="editNamaDesa" class="form-control" disabled>
@@ -109,14 +113,14 @@
 
 <script>
     function editKasus(kasus) {
-        document.getElementById('editId').value = kasus.id;
-        document.getElementById('editNamaDesa').value = kasus.desa.nama_desa;
-        document.getElementById('editNamaPenyakit').value = kasus.nama_penyakit;
-        document.getElementById('editUmur').value = kasus.umur;
-        document.getElementById('editLakiLaki').value = kasus.jumlah_laki_laki;
-        document.getElementById('editPerempuan').value = kasus.jumlah_perempuan;
-        document.getElementById('editForm').action = '/kasus-ispa/' + kasus.id;
-        $('#editModal').modal('show');
-    }
+    document.getElementById('editId').value = kasus.id;
+    document.getElementById('editNamaDesa').value = kasus.desa.nama_desa;
+    document.getElementById('editNamaPenyakit').value = kasus.nama_penyakit;
+    document.getElementById('editUmur').value = kasus.umur;
+    document.getElementById('editLakiLaki').value = kasus.jumlah_laki_laki;
+    document.getElementById('editPerempuan').value = kasus.jumlah_perempuan;
+    document.getElementById('editForm').action = "{{ route('kasus-ispa.update', '') }}/" + kasus.id;
+    $('#editModal').modal('show');
+}
 </script>
 @endsection

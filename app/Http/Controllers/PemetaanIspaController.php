@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Penduduk as ModelsPenduduk;
 use App\Models\KasusISPA;
+use Illuminate\Support\Facades\DB;
 
 class PemetaanIspaController extends Controller
 {
@@ -43,7 +44,14 @@ class PemetaanIspaController extends Controller
 
     public function getLocations()
     {
-        $locations = PemetaanIspa::all();
+        $locations = PemetaanIspa::all()->map(function ($location) {
+            $totalKasus = KasusIspa::where('pemetaan_ispa_id', $location->id)
+                ->sum(\DB::raw('jumlah_laki_laki + jumlah_perempuan'));
+
+            $location->total_kasus = $totalKasus;
+            return $location;
+        });
+
         return response()->json($locations);
     }
 
@@ -76,8 +84,9 @@ class PemetaanIspaController extends Controller
     public function showDataDesa()
     {
         $locations = PemetaanIspa::all();
-        
-        return view('pages.app.data-desa', compact('locations'));
+        $totalKasus = $locations->sum('jumlah_terkena');
+
+        return view('pages.app.data-desa', compact('locations', 'totalKasus'));
     }
 
     public function showDetail($id)

@@ -71,20 +71,28 @@ class KasusISPAController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'pemetaan_ispa_id' => 'required',
-            'nama_penyakit' => 'required|string',
-            'umur' => 'required|string',
-            'jumlah_laki_laki' => 'required|integer',
-            'jumlah_perempuan' => 'required|integer'
+        $kasus = KasusIspa::findOrFail($id);
+
+        // Cek apakah data serupa sudah ada
+        $existingKasus = KasusIspa::where('pemetaan_ispa_id', $kasus->pemetaan_ispa_id)
+            ->where('nama_penyakit', $request->nama_penyakit)
+            ->where('umur', $request->umur)
+            ->where('id', '!=', $id) // Kecualikan data saat ini
+            ->first();
+
+        if ($existingKasus) {
+            return redirect()->back()->with('error', 'Data dengan detail yang sama sudah ada.');
+        }
+
+        $kasus->update([
+            'nama_penyakit' => $request->nama_penyakit,
+            'umur' => $request->umur,
+            'jumlah_laki_laki' => $request->jumlah_laki_laki,
+            'jumlah_perempuan' => $request->jumlah_perempuan
         ]);
 
-        $kasus = KasusISPA::findOrFail($id);
-        $kasus->update($request->all());
-
-        return redirect()->route('kasus-ispa.index')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Data berhasil diupdate');
     }
-
     public function destroy($id)
     {
         $kasus = KasusISPA::findOrFail($id);

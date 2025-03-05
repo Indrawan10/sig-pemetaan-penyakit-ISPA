@@ -146,15 +146,15 @@
                     var marker = L.marker([location.latitude, location.longitude], { icon: markerIcon }).addTo(mymap);
 
                     var popupContent = `
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg mb-2">${location.nama_desa}</h3>
-                            <div class="text-gray-700">
-                                <p class="mb-1">Jumlah Kasus: ${location.jumlah_terkena}</p>
-                                ${location.address ? `<p class="text-sm">${location.address}</p>` : ''}
-                            </div>
-                        </div>
-                    `;
-                    marker.bindPopup(popupContent);
+    <div class="p-4">
+        <h3 class="font-bold text-lg mb-2">${location.nama_desa}</h3>
+        <div class="text-gray-700">
+            <p class="mb-1">Jumlah Kasus: ${location.total_kasus}</p>
+            ${location.address ? `<p class="text-sm">${location.address}</p>` : ''}
+        </div>
+    </div>
+`;
+marker.bindPopup(popupContent);
                 });
             },
             error: function (error) {

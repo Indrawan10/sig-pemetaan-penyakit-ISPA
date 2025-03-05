@@ -51,7 +51,7 @@
                     </li>
                     <li>
                         <a class="nav-link"
-                            href="{{ route('kasus-ispa.index') }}">Data List Penduduk</a>
+                            href="{{ route('kasus-ispa.index') }}">Data List Kasus ISPA</a>
                     </li>
                 </ul>
             </li>

@@ -52,6 +52,7 @@
         <section class="text-gray-800 pt-10 pb-20 text-center px-4">
             <div class="container mx-auto py-4">
                 <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">Data Desa di Kecamatan Slawi</h1>
+
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                         <thead>
@@ -71,17 +72,21 @@
                                 </tr>
                             @else
                                 @foreach ($locations as $index => $location)
-                                <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                    <td class="py-3 px-6 text-center">{{ $index + 1 }}</td>
-                                    <td class="py-3 px-6 text-center">{{ $location->nama_desa }}</td>
-                                    <td class="py-3 px-6 text-center">{{ $location->jumlah_terkena }}</td>
-                                    <td class="py-3 px-6 text-center">
-                                        <a href="{{ route('data.desa.detail', $location->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                            Detail
-                                        </a>
-                                    </td>
-                                </tr>
-                                @endforeach
+    @php
+        $totalKasusDesa = \App\Models\KasusIspa::where('pemetaan_ispa_id', $location->id)
+            ->sum(\DB::raw('jumlah_laki_laki + jumlah_perempuan'));
+    @endphp
+    <tr class="border-b border-gray-200 hover:bg-gray-100">
+        <td class="py-3 px-6 text-center">{{ $index + 1 }}</td>
+        <td class="py-3 px-6 text-center">{{ $location->nama_desa }}</td>
+        <td class="py-3 px-6 text-center">{{ $totalKasusDesa }}</td>
+        <td class="py-3 px-6 text-center">
+            <a href="{{ route('data.desa.detail', $location->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Detail
+            </a>
+        </td>
+    </tr>
+@endforeach
                             @endif
                         </tbody>
                     </table>

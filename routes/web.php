@@ -29,8 +29,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('home');
     Route::resource('user', UserController::class);
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/api/pie-chart-data', [DashboardController::class, 'pieChartData'])
-        ->name('dashboard.piechart.data');
+    Route::get('/api/pie-chart-data', [DashboardController::class, 'pieChartData'])->name('dashboard.piechart.data');
 });
 
 Route::get('/tambah-data', function () {

@@ -61,16 +61,21 @@
                                                 <th>Latitude</th>
                                                 <th>Longitude</th>
                                                 <th>Marker Color</th>
-
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @forelse ($locations as $location)
+                                                @php
+                                                    $totalKasusDesa = \App\Models\KasusIspa::where(
+                                                        'pemetaan_ispa_id',
+                                                        $location->id,
+                                                    )->sum(\DB::raw('jumlah_laki_laki + jumlah_perempuan'));
+                                                @endphp
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $location->nama_desa }}</td>
-                                                    <td>{{ $location->jumlah_terkena }}</td>
+                                                    <td>{{ $totalKasusDesa }}</td>
                                                     <td>{{ $location->latitude }}</td>
                                                     <td>{{ $location->longitude }}</td>
                                                     <td>
@@ -78,7 +83,6 @@
                                                             {{ ucfirst($location->marker_color) }}
                                                         </span>
                                                     </td>
-
                                                     <td>
                                                         <div class="buttons">
                                                             <a href="#" class="btn btn-icon btn-info btn-edit"
@@ -105,7 +109,7 @@
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan="8" class="text-center">Tidak ada data</td>
+                                                    <td colspan="7" class="text-center">Tidak ada data</td>
                                                 </tr>
                                             @endforelse
                                         </tbody>
@@ -144,7 +148,10 @@
                         </div>
                         <div class="form-group">
                             <label>Jumlah Terkena</label>
-                            <input type="number" class="form-control" name="jumlah_terkena" id="edit_jumlah_terkena">
+                            <input type="number" class="form-control" name="jumlah_terkena" id="edit_jumlah_terkena"
+                                readonly>
+                            <small class="form-text text-muted">Jumlah total dihitung otomatis dari data laki-laki dan
+                                perempuan.</small>
                         </div>
                         <div class="form-group">
                             <label>Latitude</label>
@@ -163,8 +170,6 @@
                                 <option value="green">Green</option>
                             </select>
                         </div>
-
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -238,7 +243,6 @@
             // Ambil data dari atribut
             var id = $(this).data('id');
             var nama_desa = $(this).data('nama_desa');
-            var jumlah_terkena = $(this).data('jumlah_terkena');
             var latitude = $(this).data('latitude');
             var longitude = $(this).data('longitude');
             var marker_color = $(this).data('marker_color');
@@ -247,9 +251,12 @@
             // Set action form
             $('#editForm').attr('action', '/update-data/' + id);
 
+            // Ambil jumlah kasus yang dihitung dari tabel
+            var totalKasus = $(this).closest('tr').find('td:eq(2)').text();
+
             // Isi form dengan data
             $('#edit_nama_desa').val(nama_desa);
-            $('#edit_jumlah_terkena').val(jumlah_terkena);
+            $('#edit_jumlah_terkena').val(totalKasus);
             $('#edit_latitude').val(latitude);
             $('#edit_longitude').val(longitude);
             $('#edit_marker_color').val(marker_color);

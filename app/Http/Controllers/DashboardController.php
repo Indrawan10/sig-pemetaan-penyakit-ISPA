@@ -19,18 +19,19 @@ class DashboardController extends Controller
     {
         try {
             $desas = PemetaanIspa::select('nama_desa')
-                ->withCount('penduduk')
+                ->withCount('penduduk')  // Pastikan ini menghitung jumlah penduduk
                 ->get()
                 ->map(function ($desa) {
                     return [
                         'nama_desa' => $desa->nama_desa,
-                        'total_penduduk' => $desa->penduduk_count
+                        'total_penduduk' => $desa->penduduk_count // Pastikan nama ini sesuai dengan data yang dibutuhkan
                     ];
                 });
-
+    
             return response()->json($desas);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    
 }

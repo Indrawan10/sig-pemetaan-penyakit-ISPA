@@ -40,13 +40,14 @@
     <main class="flex-1">
         <!-- Hero Section with Image and Overlay -->
 
-        <section class="relative bg-cover bg-center h-80 flex items-center justify-center text-center px-4" style="background-image: url('https://radartegal.disway.id/upload/27ab65482a9cbaff84d0d8e372cd4129.png');">
-        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div class="container mx-auto relative z-10 text-white">
-            <h1 class="text-4xl md:text-5xl font-bold">Sistem Informasi Geografis Pemetaan Penyakit ISPA</h1>
-            <p class="mt-4 text-lg">Informasi dan data desa di wilayah Slawi</p>
-        </div>
-    </section>
+        <section class="relative bg-cover bg-center h-80 flex items-center justify-center text-center px-4"
+            style="background-image: url('https://radartegal.disway.id/upload/27ab65482a9cbaff84d0d8e372cd4129.png');">
+            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+            <div class="container mx-auto relative z-10 text-white">
+                <h1 class="text-4xl md:text-5xl font-bold">Sistem Informasi Geografis Pemetaan Penyakit ISPA</h1>
+                <p class="mt-4 text-lg">Informasi dan data desa di wilayah Slawi</p>
+            </div>
+        </section>
 
         <!-- Data Desa -->
         <section class="text-gray-800 pt-10 pb-20 text-center px-4">
@@ -72,21 +73,24 @@
                                 </tr>
                             @else
                                 @foreach ($locations as $index => $location)
-    @php
-        $totalKasusDesa = \App\Models\KasusIspa::where('pemetaan_ispa_id', $location->id)
-            ->sum(\DB::raw('jumlah_laki_laki + jumlah_perempuan'));
-    @endphp
-    <tr class="border-b border-gray-200 hover:bg-gray-100">
-        <td class="py-3 px-6 text-center">{{ $index + 1 }}</td>
-        <td class="py-3 px-6 text-center">{{ $location->nama_desa }}</td>
-        <td class="py-3 px-6 text-center">{{ $totalKasusDesa }}</td>
-        <td class="py-3 px-6 text-center">
-            <a href="{{ route('data.desa.detail', $location->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                Detail
-            </a>
-        </td>
-    </tr>
-@endforeach
+                                    @php
+                                        $totalKasusDesa = \App\Models\KasusIspa::where(
+                                            'pemetaan_ispa_id',
+                                            $location->id,
+                                        )->sum(\DB::raw('jumlah_laki_laki + jumlah_perempuan'));
+                                    @endphp
+                                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                        <td class="py-3 px-6 text-center">{{ $index + 1 }}</td>
+                                        <td class="py-3 px-6 text-center">{{ $location->nama_desa }}</td>
+                                        <td class="py-3 px-6 text-center">{{ $totalKasusDesa }}</td>
+                                        <td class="py-3 px-6 text-center">
+                                            <a href="{{ route('data.desa.detail', $location->id) }}"
+                                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                                Detail
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @endif
                         </tbody>
                     </table>
@@ -102,7 +106,7 @@
 
     <script>
         // Navbar Mobile Toggle
-        document.getElementById('menu-toggle').addEventListener('click', function () {
+        document.getElementById('menu-toggle').addEventListener('click', function() {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
     </script>

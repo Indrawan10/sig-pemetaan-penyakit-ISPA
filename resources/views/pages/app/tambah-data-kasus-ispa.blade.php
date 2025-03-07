@@ -135,18 +135,17 @@
         });
 
          function toggleCustomInput() {
-        var select = document.getElementById("nama_penyakit");
-        var customInput = document.getElementById("custom_penyakit");
+    var select = document.getElementById("nama_penyakit");
+    var customInput = document.getElementById("custom_penyakit");
 
-        if (select.value === "custom") {
-            customInput.classList.remove("d-none");
-            customInput.setAttribute("name", "nama_penyakit");
-            select.removeAttribute("name");
-        } else {
-            customInput.classList.add("d-none");
-            customInput.removeAttribute("name");
-            select.setAttribute("name", "nama_penyakit");
-        }
+    if (select.value === "custom") {
+        customInput.classList.remove("d-none");
+        customInput.setAttribute("name", "custom_penyakit");
+    } else {
+        customInput.classList.add("d-none");
+        customInput.removeAttribute("name");
     }
+}
+
     </script>
 @endpush

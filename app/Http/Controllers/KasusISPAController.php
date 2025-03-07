@@ -27,15 +27,22 @@ class KasusISPAController extends Controller
     {
         $request->validate([
             'pemetaan_ispa_id' => 'required',
-            'nama_penyakit' => 'required',
             'umur' => 'required',
             'jumlah_laki_laki' => 'required|numeric',
             'jumlah_perempuan' => 'required|numeric',
         ]);
 
+        // Cek apakah pengguna memasukkan penyakit baru
+        if ($request->filled('custom_penyakit')) {
+            $penyakit = Penyakit::firstOrCreate(['nama' => $request->custom_penyakit]);
+            $nama_penyakit = $penyakit->nama;
+        } else {
+            $nama_penyakit = $request->nama_penyakit;
+        }
+
         // Cek apakah data sudah ada
         $existingData = KasusIspa::where('pemetaan_ispa_id', $request->pemetaan_ispa_id)
-            ->where('nama_penyakit', $request->nama_penyakit)
+            ->where('nama_penyakit', $nama_penyakit)
             ->where('umur', $request->umur)
             ->exists();
 
@@ -48,7 +55,7 @@ class KasusISPAController extends Controller
         // Simpan data baru jika tidak duplikat
         KasusIspa::create([
             'pemetaan_ispa_id' => $request->pemetaan_ispa_id,
-            'nama_penyakit' => $request->nama_penyakit,
+            'nama_penyakit' => $nama_penyakit,
             'umur' => $request->umur,
             'jumlah_laki_laki' => $request->jumlah_laki_laki,
             'jumlah_perempuan' => $request->jumlah_perempuan,

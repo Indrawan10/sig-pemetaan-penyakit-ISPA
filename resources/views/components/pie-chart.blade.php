@@ -35,8 +35,8 @@
                         data: {
                             labels: data.map(item => item.nama_desa),
                             datasets: [{
-                                label: 'Jumlah Penduduk',
-                                data: data.map(item => item.total_penduduk),
+                                label: 'Total Kasus ISPA',
+                                data: data.map(item => item.total_kasus_ispa), // Ganti total_penduduk dengan total_kasus_ispa
                                 backgroundColor: [
                                     '#FF6384',  // Merah
                                     '#36A2EB',  // Biru
@@ -64,12 +64,12 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Total Penduduk per Desa'
+                                    text: 'Total Kasus ISPA per Desa' // Ubah judul grafik
                                 },
                                 tooltip: {
                                     callbacks: {
                                         label: function(context) {
-                                            return `${context.label}: ${context.raw} penduduk`;
+                                            return `${context.label}: ${context.raw} kasus ISPA`; // Ubah teks tooltip
                                         }
                                     }
                                 }

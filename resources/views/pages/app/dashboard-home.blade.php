@@ -15,7 +15,7 @@
     <!-- Navbar -->
     <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="/" class="text-xl font-bold text-gray-800">BACOT</a>
+            <a href="/" class="text-xl font-bold text-gray-800">SLAWI</a>
 
             <!-- Menu Toggle Button -->
             <button id="menu-toggle" class="md:hidden text-gray-700 focus:outline-none">
@@ -87,13 +87,7 @@
         <h2 class="text-3xl font-bold text-gray-800">Cara Mencegah ISPA</h2>
         <p class="mt-4 text-gray-600">Beberapa langkah untuk menghindari infeksi saluran pernapasan akut.</p>
         <div class="flex flex-wrap justify-center mt-6">
-            <div class="w-full md:w-1/3 p-4">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <img src="" alt="Gunakan Masker" class="w-16 mx-auto mb-4">
-                    <h3 class="text-lg font-semibold text-blue-500">Gunakan Masker</h3>
-                    <p class="text-gray-700">Hindari paparan polusi udara dengan menggunakan masker.</p>
-                </div>
-            </div>
+
             <div class="w-full md:w-1/3 p-4">
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <img src="https://cdn-icons-png.flaticon.com/512/4826/4826030.png" alt="Cuci Tangan" class="w-16 mx-auto mb-4">
@@ -103,8 +97,17 @@
             </div>
             <div class="w-full md:w-1/3 p-4">
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1046/1046786.png" alt="Jaga Pola Makan" class="w-16 mx-auto mb-4">
-                    <h3 class="text-lg font-semibold text-red-500">Jaga Pola Makan</h3>
+                    <img src="/img/masker.png" alt="Gunakan Masker" class="w-16 mx-auto mb-4">
+
+                    <h3 class="text-lg font-semibold text-green-500">Gunakan Masker</h3>
+
+                    <p class="text-gray-700">Hindari paparan polusi udara dengan menggunakan masker.</p>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 p-4">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <img src="/img/diet.png" alt="Jaga Pola Makan" class="w-16 mx-auto mb-4">
+                    <h3 class="text-lg font-semibold text-green-500">Jaga Pola Makan</h3>
                     <p class="text-gray-700">Konsumsi makanan bergizi untuk meningkatkan daya tahan tubuh.</p>
                 </div>
             </div>
@@ -116,7 +119,7 @@
 
     <!-- Footer -->
     <footer class="bg-blue-500 text-white py-6 text-center">
-        <p class="text-sm">© 2023 BACOT. All rights reserved.</p>
+        <p class="text-sm">© 2025 SLAWI. All rights reserved.</p>
     </footer>
 
     <!-- Leaflet Map -->

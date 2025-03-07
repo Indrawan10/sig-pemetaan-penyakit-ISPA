@@ -15,7 +15,7 @@
     <!-- Navbar -->
     <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="/" class="text-xl font-bold text-gray-800">BACOT</a>
+            <a href="/" class="text-xl font-bold text-gray-800">SLAWI</a>
 
             <button id="menu-toggle" class="md:hidden text-gray-700 focus:outline-none">
                 ☰
@@ -101,7 +101,7 @@
 
     <!-- Footer -->
     <footer class="bg-blue-500 text-white py-6 text-center">
-        <p class="text-sm">© 2023 BACOT. All rights reserved.</p>
+        <p class="text-sm">© 2025 SLAWI. All rights reserved.</p>
     </footer>
 
     <script>

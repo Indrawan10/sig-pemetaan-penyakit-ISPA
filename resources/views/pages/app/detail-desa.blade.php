@@ -7,12 +7,40 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .header-row th {
+            background-color: #a5c2f5 !important;
+            color: #000;
+        }
+        .age-data {
+            text-align: left;
+            font-weight: bold;
+        }
+        .sum-row td {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
     <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="/" class="text-xl font-bold text-gray-800">BACOT</a>
+            <a href="/" class="text-xl font-bold text-gray-800">SLAWI</a>
             <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none text-2xl">☰</button>
             <div id="menu" class="hidden md:flex space-x-4">
                 <a href="/" class="text-gray-700 hover:text-blue-500 px-4">Home</a>
@@ -52,50 +80,91 @@
             <div id="map" class="w-full h-64 mt-4 rounded-lg"></div>
         </div>
 
-        <h2 class="text-2xl font-bold text-gray-800 mt-10 text-center">Daftar Penduduk</h2>
-        <div class="overflow-x-auto mt-4">
-            <table class="w-full bg-white border border-gray-300 rounded-lg shadow-md">
-                <thead>
-                    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                        <th class="py-3 px-6 text-center">No</th>
-                        <th class="py-3 px-6 text-center">Nama Penyakit</th>
-                        <th class="py-3 px-6 text-center">Umur</th>
-                        <th class="py-3 px-6 text-center">Laki-laki</th>
-                        <th class="py-3 px-6 text-center">Perempuan</th>
-                    </tr>
-                </thead>
-                <tbody class="text-gray-600 text-sm font-light">
-    @php
-        $totalKasus = 0;
-        $sortedKasus = $kasus->sortBy('umur'); // Gunakan sortBy() untuk mengurutkan umur dari terkecil ke terbesar
-    @endphp
-    @foreach($sortedKasus as $k)
-    @php
-        $jumlahTotal = $k->jumlah_laki_laki + $k->jumlah_perempuan;
-        $totalKasus += $jumlahTotal;
-    @endphp
-    <tr class="border-b border-gray-200 hover:bg-gray-100">
-        <td class="py-3 px-6 text-center">{{ $loop->iteration }}</td>
-        <td class="py-3 px-6 text-center">{{ $k->nama_penyakit }}</td>
-        <td class="py-3 px-6 text-center">{{ $k->umur }}</td>
-        <td class="py-3 px-6 text-center">{{ $k->jumlah_laki_laki }}</td>
-        <td class="py-3 px-6 text-center">{{ $k->jumlah_perempuan }}</td>
+    <h2 class="text-2xl font-bold text-gray-800 mt-10 text-center">Daftar Penduduk</h2>
+    <div class="overflow-x-auto mt-4">
+        <table>
+           <thead>
+    <tr class="header-row">
+        <th rowspan="2">NO</th>
+        <th rowspan="2">UMUR</th>
+        @php
+            $penyakitList = $kasus->pluck('nama_penyakit')->unique();
+        @endphp
+        @foreach($penyakitList as $penyakit)
+            <th colspan="2">{{ $penyakit }}</th>
+        @endforeach
+        <th rowspan="2">Jumlah</th> <!-- Tambahkan kolom Jumlah -->
     </tr>
-    @endforeach
+    <tr class="header-row">
+        @foreach($penyakitList as $penyakit)
+            <th>L</th>
+            <th>P</th>
+        @endforeach
+    </tr>
+</thead>
+<tbody>
+    @if($kasus->isEmpty())
+        <tr>
+            <td colspan="{{ 2 + count($penyakitList) * 2 + 1 }}" style="text-align: center; font-weight: bold; color: rgb(0, 0, 0);">
+                Data Tidak Ada
+            </td>
+        </tr>
+    @else
+        @php
+            $umurList = $kasus->pluck('umur')->unique()->sort();
+        @endphp
+        @foreach($umurList as $index => $umur)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td class="age-data">{{ $umur }}</td>
+                @php
+                    $totalPerRow = 0;
+                @endphp
+                @foreach($penyakitList as $penyakit)
+                    @php
+                        $dataKasus = $kasus->firstWhere(fn($k) => $k->umur == $umur && $k->nama_penyakit == $penyakit);
+                        $jumlahLakiLaki = $dataKasus ? $dataKasus->jumlah_laki_laki : 0;
+                        $jumlahPerempuan = $dataKasus ? $dataKasus->jumlah_perempuan : 0;
+                        $totalPerRow += $jumlahLakiLaki + $jumlahPerempuan;
+                    @endphp
+                    <td>{{ $jumlahLakiLaki }}</td>
+                    <td>{{ $jumlahPerempuan }}</td>
+                @endforeach
+                <td style="font-weight: bold;">{{ $totalPerRow }}</td>
+            </tr>
+        @endforeach
+        <tr class="sum-row">
+            <td colspan="2" style="text-align: center; font-weight: bold;">JUMLAH KESELURUHAN</td>
+            @php
+                $totalLakiLaki = 0;
+                $totalPerempuan = 0;
+            @endphp
+            @foreach($penyakitList as $penyakit)
+                @php
+                    $jumlahLakiLaki = $kasus->where('nama_penyakit', $penyakit)->sum('jumlah_laki_laki');
+                    $jumlahPerempuan = $kasus->where('nama_penyakit', $penyakit)->sum('jumlah_perempuan');
+                    $totalLakiLaki += $jumlahLakiLaki;
+                    $totalPerempuan += $jumlahPerempuan;
+                @endphp
+                <td>{{ $jumlahLakiLaki }}</td>
+                <td>{{ $jumlahPerempuan }}</td>
+            @endforeach
+            <td style="background-color: #a5c2f5; font-weight: bold; color: rgb(0, 0, 0);">
+                {{ $totalLakiLaki + $totalPerempuan }}
+            </td>
+        </tr>
+    @endif
 </tbody>
 
-                <tfoot>
-                    <tr class="bg-gray-200 font-bold">
-                        <td colspan="4" class="py-3 px-6 text-center">Total Keseluruhan</td>
-                        <td class="py-3 px-6 text-center">{{ $totalKasus }}</td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+
+        </table>
+    </div>
+</section>
+
     </section>
 
     <footer class="bg-blue-500 text-white py-6 text-center">
-        <p class="text-sm">© 2023 BACOT. All rights reserved.</p>
+        <p class="text-sm">© 2025 SLAWI. All rights reserved.</p>
     </footer>
 
     <script>

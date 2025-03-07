@@ -46,7 +46,8 @@ class PemetaanIspaController extends Controller
     {
         $locations = PemetaanIspa::all()->map(function ($location) {
             $totalKasus = KasusIspa::where('pemetaan_ispa_id', $location->id)
-                ->sum(\DB::raw('jumlah_laki_laki + jumlah_perempuan'));
+                ->sum(DB::raw('jumlah_laki_laki + jumlah_perempuan'));
+
 
             $location->total_kasus = $totalKasus;
             return $location;
